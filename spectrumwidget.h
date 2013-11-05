@@ -12,8 +12,7 @@ class SpectrumWidget : public QGLWidget
 {
     Q_OBJECT
 public:
-    SpectrumWidget(QWidget *parent, Settings *settings);
-    Settings *settings;
+    SpectrumWidget(QWidget *parent);
 
     int getFftPoints() { return fftw_wrapper.out_size; }
 

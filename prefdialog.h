@@ -10,8 +10,7 @@ class PrefDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit PrefDialog(QWidget *parent, Settings *settings, int fftPoints);
-    Settings *settings;
+    explicit PrefDialog(QWidget *parent, int fftPoints);
     
 signals:
     

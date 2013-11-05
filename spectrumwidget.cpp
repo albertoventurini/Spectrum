@@ -7,10 +7,11 @@
 #include "jackclient.h"
 
 
-SpectrumWidget::SpectrumWidget(QWidget *parent, Settings *settings) :
+SpectrumWidget::SpectrumWidget(QWidget *parent) :
     QGLWidget(parent), jackClient("Spectrum")
 {
-    this->settings = settings;
+    // Get the settings instance
+    Settings *settings = Settings::getInstance();
 
     // Initialize OpenGL context
     setFormat(QGLFormat(QGL::DoubleBuffer));
@@ -19,7 +20,7 @@ SpectrumWidget::SpectrumWidget(QWidget *parent, Settings *settings) :
     gridColor = QColor(Qt::gray);
 
     // Initialize the FFTW wrapper object
-    fftw_wrapper.init(jackClient.buffer_size, settings);
+    fftw_wrapper.init(jackClient.buffer_size);
 
     settings->min_fft_point = 0;
     settings->max_fft_point = fftw_wrapper.out_size;
@@ -37,7 +38,7 @@ SpectrumWidget::SpectrumWidget(QWidget *parent, Settings *settings) :
 // When the FPS change, we change the animateTimer interval
 void SpectrumWidget::changeFps()
 {
-    animateTimer->setInterval(1000.0 / (float)settings->fps);
+    animateTimer->setInterval(1000.0 / (float)(Settings::getInstance()->fps));
 }
 
 
@@ -106,8 +107,7 @@ void SpectrumWidget::drawSpectrum()
 {
     if(fftw_wrapper.out)
     {
-        float x, y;
-
+        Settings *settings = Settings::getInstance();
         int min = settings->min_fft_point;
 
         // Let's protect ourselves from a potential segfault here: we cannot read more than fftw_wrapper.out_size samples
@@ -116,6 +116,7 @@ void SpectrumWidget::drawSpectrum()
         glColor3f(1,1,1);
         glBegin(GL_LINE_STRIP);
 
+        float x, y;
         for(int i = min; i < max; i++)
         {
             // Scale x and y

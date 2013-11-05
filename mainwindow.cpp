@@ -13,18 +13,15 @@
 MainWindow::MainWindow() :
     QMainWindow(0)
 {
-    // Create a new Settings object
-    settings = new Settings();
+    // set initial size
+    resize(800, 600);
 
     // Create a central widget
     QWidget *widget = new QWidget;
     setCentralWidget(widget);
 
-    // set initial size
-    resize(800, 600);
-
     // create a new openGL widget
-    spectrumWidget = new SpectrumWidget(widget, settings);
+    spectrumWidget = new SpectrumWidget(widget);
     spectrumWidget->resize(width(), height());
 
     // create a basic layout and add the openGL widget to it
@@ -34,13 +31,14 @@ MainWindow::MainWindow() :
     widget->setLayout(layout);
 
     // Create the preference dialog object, but don't show it
-    prefDialog = new PrefDialog(this, settings, spectrumWidget->getFftPoints());
+    prefDialog = new PrefDialog(this, spectrumWidget->getFftPoints());
 
     createActions();
     createMenus();
 }
 
 
+// Create actions (which we will use for the menu)
 void MainWindow::createActions()
 {
     quitAct = new QAction(tr("&Quit"), this);
@@ -54,6 +52,7 @@ void MainWindow::createActions()
 }
 
 
+// Create the main window menu
 void MainWindow::createMenus()
 {
     fileMenu = menuBar()->addMenu(tr("&File"));

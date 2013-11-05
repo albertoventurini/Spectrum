@@ -8,6 +8,8 @@
 
 #include "prefdialog.h"
 
+#include "settings.h"
+
 //////////////////////////////////////////////////////////////////////////////
 // Main constructor
 // Inputs:
@@ -15,10 +17,12 @@
 //   * pointer to the global settings object
 //   * the number of points (frequency bins) in the FFT. We need this number to set a limit to one of the spinboxes below.
 //
-PrefDialog::PrefDialog(QWidget *parent, Settings *settings, int fftPoints) :
+
+PrefDialog::PrefDialog(QWidget *parent, int fftPoints) :
     QDialog(parent)
 {
-    this->settings = settings;
+    // Get the Settings instance
+    Settings *settings = Settings::getInstance();
 
     setWindowTitle(tr("Preferences"));
 

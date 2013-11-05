@@ -9,7 +9,7 @@ FFTWWrapper::FFTWWrapper() :
 }
 
 
-void FFTWWrapper::init(int buffer_size, Settings *settings)
+void FFTWWrapper::init(int buffer_size)
 {
     fft_points = buffer_size;
 
@@ -23,7 +23,7 @@ void FFTWWrapper::init(int buffer_size, Settings *settings)
     out = new float[buffer_size];
     memset(out, 0, sizeof(float)*buffer_size);
 
-    this->settings = settings;
+    //this->settings = settings;
 }
 
 
@@ -46,6 +46,8 @@ void FFTWWrapper::power_spectrum(float *in)
 
     float tmp;
     out_max = 0.0;
+
+    Settings *settings = Settings::getInstance();
 
     for (int i = 0; i < out_size; i++)
     {

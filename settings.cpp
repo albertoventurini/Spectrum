@@ -1,5 +1,10 @@
 #include "settings.h"
 
+// Here we implement a singleton pattern
+
+// Initialize the unique settings instance to NULL
+Settings *Settings::instance = NULL;
+
 Settings::Settings()
 {
     // Initial settings
@@ -8,6 +13,13 @@ Settings::Settings()
     falloff = 10;
     min_fft_point = 0;
     max_fft_point = 1;
+}
+
+
+Settings *Settings::getInstance()
+{
+    if(instance == NULL) instance = new Settings;
+    return instance;
 }
 
 
